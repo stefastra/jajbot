@@ -1,20 +1,16 @@
+const fs = require('fs');
 const Discord = require('discord.js');
+
+let rawdata = fs.readFileSync('token.json');
+let token = JSON.parse(rawdata);
+console.log(token);
+
 const client = new Discord.Client();
-
-/*const fs = require('fs') 
-fs.readFile('token.txt', (err, data) => { 
-    if (err) throw err; 
-
-    return data.toString();
-}) */
-//inactive for now
-
-const token = 'NjkzOTY2MTEwMzI4MDk0NzMw.XoIfSw.xfWtcPP3poBr6pAwlDyTzwX5jTA';
 const prefix = '~';
 var usePrefix = false;
 
 client.on('ready', ()=>{
-    console.log('jaj is online, id: ${client.user.tag}');
+    console.log('jaj is online, id: ' + client.user.tag);
 
     client.user.setPresence({
         status: "online",
@@ -45,11 +41,7 @@ client.on('message', message=>{
                 }
                 else{
                     if(!message.guild.voice)
-                        message.member.voiceChannel.join()
-                        .then(connection =>{
-                            message.channel.send("geia xalarwse")
-                        })
-                        
+                        client.joinVoiceChannel()         
                 }
         }
     }
