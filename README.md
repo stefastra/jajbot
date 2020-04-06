@@ -1,4 +1,7 @@
 # jajbot
-internal use Discord bot
+just another discord bot
 
-//todo
+## Features
+- Will simulate 100% accurately a conversation with a jaj
+- Deletion of -p messages not sent to designated bot-commands channel
+- More to follow
