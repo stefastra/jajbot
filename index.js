@@ -13,17 +13,19 @@ function sleep(ms) {
 
 client.on('ready', ()=>{
     console.log('jaj is online, id: ' + client.user.tag + '. token is valid.');
+    const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
+    chGeneral.send('jupnisa, kalimera xalarwse!')
 });
 
 client.on('guildMemberUpdate', member=>{
-    const channel = member.guild.channels.cache.find(ch => ch.name === '⌨general');
     if(member.id=='225195171204038656'){
-        channel.send('xaxa o mixalis allakse onoma')
+        const chGeneral = member.guild.channels.cache.find(ch => ch.name === '⌨general');
+        chGeneral.send('xaxa o mixalis allakse onoma');
     }
 })
 
 const prntUrlBase = 'http://prntscr.com/';
-var prntUrlVarStr = 'ruh';
+var prntUrlVarStr = 'rus';
 var prntUrlVarNum = 999;
 
 var flag = true;
