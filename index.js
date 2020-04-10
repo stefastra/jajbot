@@ -1,9 +1,9 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const prefix = '~';
 const token = JSON.parse(fs.readFileSync('token.json'))
-var usePrefix = false;
+const prntUrlBase = 'http://prntscr.com/';
+var prntUrlVarNum = parseInt(JSON.parse(fs.readFileSync('runtime.json')));
 
 client.login(token);
 
@@ -14,7 +14,9 @@ function sleep(ms) {
 client.on('ready', ()=>{
     console.log('jaj is online, id: ' + client.user.tag + '. token is valid.');
     const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
-    chGeneral.send('jupnisa, kalimera xalarwse!')
+    const chTest = client.channels.cache.find(ch => ch.name === 'jaj-education-center');
+    //chGeneral.send('jupnisa, kalimera xalarwse!');
+    //chTest.send('jupnisa :flushed:')
 });
 
 client.on('guildMemberUpdate', member=>{
@@ -24,22 +26,38 @@ client.on('guildMemberUpdate', member=>{
     }
 })
 
-const prntUrlBase = 'http://prntscr.com/';
-var prntUrlVarStr = 'rus';
-var prntUrlVarNum = 999;
-
 var flag = true;
 var flagK = false;
 var isSending = false;
+var delMsgNum = 1;
+
+/*client.on('typingStart', user=>{
+    user.reply() TODO
+})*/
 
 client.on('message', async message=>{
-    let args = message.content.substring(prefix.length).split(" ");
-    let ytlink = message.content.substring(0,32);
-    let ytlinkalt = message.content.substring(0,17);
-    let mCon = message.content.toLowerCase();
+    let args = message.content.toLowerCase().split(" ");
+    var logMsg = '';
 
-    //1: bot-commands, 2: music, music exception is needed to avoid duplicate chat moderation rules
-    if(((mCon[0]=='-' && mCon[1]=='p') || (mCon[0]=='-' && mCon[1]=='s') || (mCon[0]=='-' && mCon[1]=='r')) && message.channel!='487383328161267714' && message.channel!='487381111744233473'){
+    //temp
+        var i=0;
+        args.forEach(element => {
+            logMsg+='args['+i+']=';
+            logMsg+=element+'\n';
+            i++;
+        });
+
+    if(message.channel.id=='698142346931601421' && message.author.id!='693966110328094730'){
+        //message.channel.send(logMsg);
+    }
+
+    //temp
+    console.log(args);
+    console.log(args[0],args[1]);
+    
+
+    //all channel moderation |1: bot-commands, 2: music, music exception is needed to avoid duplicate chat moderation rules
+    if(((args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r')) && message.channel!='487383328161267714' && message.channel!='487381111744233473'){
         
         message.delete();
         if(flag){
@@ -56,10 +74,11 @@ client.on('message', async message=>{
             })
             flag=true
         }
-        console.log('misplaced bot command eliminated, in ' + message.channel.name)
+        console.log('misplaced bot command eliminated in ' + message.channel.name)
     }
     
-    if(ytlink!='https://www.youtube.com/watch?v=' && ytlinkalt!='https://youtu.be/' && message.channel=='487381111744233473' && message.author.id!='693966110328094730'){
+    //music channel moderation
+    if(message.content.substring(0,32)!='https://www.youtube.com/watch?v=' && message.content.substring(0,17)!='https://youtu.be/' && message.channel=='487381111744233473' && message.author.id!='693966110328094730'){
         console.log('non-youtube link spotted in music channel');
         message.delete();
         if(message.author.id!='234395307759108106')
@@ -69,28 +88,44 @@ client.on('message', async message=>{
             });
     }
 
-    if(mCon=='jaj svise'){
+    if(message.content=='jaj svise'){
         if(message.member.roles.cache.has('340521348260429824')){
-            console.log('o jaj esvise 10 minimata sto ', message.channel.name);
-            message.channel.bulkDelete(10);
+            switch(args[2]){
+                case args[2]>=100:
+                    delMsgNum=100;
+                break;
+                case args[2]<=0:
+                    delMsgNum=1;
+                break;
+                case args[2]:
+            }
+            console.log('o jaj esvise ', delMsgNum, ' minimata sto ', message.channel.name);
+            message.channel.bulkDelete(delMsgNum);
+            message.reply('geia jaj edw, esvisa ', delMsgNum, ' minimata :^)')
+            .then(msg =>{
+                msg.delete({timeout:5000});
+            })
         }
         else{
             message.reply('den exeis adeia gia auto bro..');
         }
     }
 
-    if(mCon=='jaj steile' && message.channel.id=='696857160318976021'){
-        while(true){
+    if(args[0]=='jaj' && args[1]=='steile' && message.channel.id=='696857160318976021'){
             console.log('Sending pic...');
-            message.channel.send(prntUrlBase + prntUrlVarStr + prntUrlVarNum.toString());
-            prntUrlVarNum--;
+            message.channel.send(prntUrlBase + prntUrlVarNum.toString(36));
+            prntUrlVarNum++;
             await sleep(3000);
             console.log('Sent!');
-        }
     }
 
-//generic responses
-        switch(mCon){
+    //generic responses below
+    if(args[0]=='geia' && message.author.id!='693966110328094730'){
+        message.channel.send(args[0]);
+        console.log('geia upothike');
+    }
+
+    switch(args[0]){
             case 'geia':
                 message.reply('geia');
                 message.channel.send('<:peepoSmile:629010685095051264>');
@@ -117,19 +152,19 @@ client.on('message', async message=>{
                 message.channel.send('haha bruh: https://github.com/stefastra/jajbot');
             break;
             case 'mpes':
-                if(true){
+                if(message.author.presence){
                     message.channel.send('pou re mlk');
                     message.channel.send('<:peepoNpc:536307730361745418>');
                 }
                 else{
-                    if(!message.guild.voice)
-                        client.joinVoiceChannel();
+                        const vc = message.guild.channels.cache.get('340526243743137813');
+                        vc.join();
                 }
             break;
             case 'mu lipis':
                 message.channel.send(':point_right: :point_left:');
             break;
-            case 'jaj':
+            case 'jaj malaka':
                 message.channel.send(':point_left: :point_right:');
             break;
             case 'ti trws?':
