@@ -4,6 +4,13 @@ const client = new Discord.Client();
 const token = JSON.parse(fs.readFileSync('token.json'))
 const prntUrlBase = 'http://prntscr.com/';
 var prntUrlVarNum = parseInt(JSON.parse(fs.readFileSync('runtime.json')));
+var msgFlag = true;
+var jajBotId = '693966110328094730';
+var musicBotId = '234395307759108106';
+var stefastraId = '181014405578883073';
+var dmChannelId = '696483345760125058';
+var adminRoleId = '727647679026561117';
+var doStartupMessage = false;
 
 client.login(token);
 
@@ -14,9 +21,9 @@ function sleep(ms) {
 client.on('ready', ()=>{
     console.log('jaj is online, id: ' + client.user.tag + '. token is valid.');
     const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
-    const chTest = client.channels.cache.find(ch => ch.name === 'jaj-education-center');
-    //chGeneral.send('jupnisa, kalimera xalarwse!');
-    //chTest.send('jupnisa :flushed:')
+    if(doStartupMessage)
+        chGeneral.send('jupnisa, kalimera xalarwse!');
+    var Kavlet = client.guilds.cache.find(gl => gl.name === 'Kavlet');
 });
 
 client.on('guildMemberUpdate', member=>{
@@ -26,34 +33,35 @@ client.on('guildMemberUpdate', member=>{
     }
 })
 
-var flag = true;
+var flag = true; 
 var flagK = false;
 var isSending = false;
 var delMsgNum = 1;
 
-/*client.on('typingStart', user=>{
-    user.reply() TODO
-})*/
-
 client.on('message', async message=>{
-    let args = message.content.toLowerCase().split(" ");
+    const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
+    console.log("msgId: " + "\"" + message.channel.id + "\"")
+    if(message.channel.id === dmChannelId){
+        chGeneral.send(message.content);
+    }
+    let args = message.content.toLowerCase();
     var logMsg = '';
 
-    //temp
+    /*
         var i=0;
         args.forEach(element => {
             logMsg+='args['+i+']=';
             logMsg+=element+'\n';
             i++;
-        });
+        });*/
 
-    if(message.channel.id=='698142346931601421' && message.author.id!='693966110328094730'){
+    if(message.channel.id=='698142346931601421' && message.author.id!=jajBotId){
         //message.channel.send(logMsg);
     }
 
     //temp
     console.log(args);
-    console.log(args[0],args[1]);
+    console.log("l1: " + args[0],"l2: " + args[1]);
     
 
     //all channel moderation |1: bot-commands, 2: music, music exception is needed to avoid duplicate chat moderation rules
@@ -78,7 +86,7 @@ client.on('message', async message=>{
     }
     
     //music channel moderation
-    if(message.content.substring(0,32)!='https://www.youtube.com/watch?v=' && message.content.substring(0,17)!='https://youtu.be/' && message.channel=='487381111744233473' && message.author.id!='693966110328094730'){
+    if(message.content.substring(0,32)!='https://www.youtube.com/watch?v=' && message.content.substring(0,17)!='https://youtu.be/' && message.channel=='487381111744233473' && message.author.id!=jajBotId){
         console.log('non-youtube link spotted in music channel');
         message.delete();
         if(message.author.id!='234395307759108106')
@@ -88,20 +96,16 @@ client.on('message', async message=>{
             });
     }
 
-    if(message.content=='jaj svise'){
-        if(message.member.roles.cache.has('340521348260429824')){
-            switch(args[2]){
-                case args[2]>=100:
-                    delMsgNum=100;
-                break;
-                case args[2]<=0:
-                    delMsgNum=1;
-                break;
-                case args[2]:
+    if(message.content.substring(0,9)=='jaj svise'){
+        if(message.author.id == adminRoleId || message.author.id == stefastraId){
+            if (args[11]>=0 && args[11]<=9){
+                delMsgNum = parseInt(args[11]) * 10;
+                console.log('jaj will delete ', delMsgNum, ' messages in', message.channel.name);
             }
+            delMsgNum = 20;
             console.log('o jaj esvise ', delMsgNum, ' minimata sto ', message.channel.name);
             message.channel.bulkDelete(delMsgNum);
-            message.reply('geia jaj edw, esvisa ', delMsgNum, ' minimata :^)')
+            message.reply('geia jaj edw, esvisa ' + toString(delMsgNum) + ' minimata :^)')
             .then(msg =>{
                 msg.delete({timeout:5000});
             })
@@ -120,12 +124,12 @@ client.on('message', async message=>{
     }
 
     //generic responses below
-    if(args[0]=='geia' && message.author.id!='693966110328094730'){
+    if(args[0]=='geia' && message.author.id!=jajBotId){
         message.channel.send(args[0]);
         console.log('geia upothike');
     }
 
-    switch(args[0]){
+    switch(message.content){
             case 'geia':
                 message.reply('geia');
                 message.channel.send('<:peepoSmile:629010685095051264>');
