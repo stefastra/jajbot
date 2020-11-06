@@ -40,7 +40,7 @@ var delMsgNum = 1;
 
 client.on('message', async message=>{
     const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
-    console.log("msgId: " + "\"" + message.channel.id + "\"")
+    console.log("msgId: " + "\"" + message.id + "\"" + " authorId: " + "\"" + message.author.id + "\"")
     if(message.channel.id === dmChannelId){
         chGeneral.send(message.content);
     }
@@ -53,13 +53,10 @@ client.on('message', async message=>{
             logMsg+='args['+i+']=';
             logMsg+=element+'\n';
             i++;
-        });*/
+        });
+    */
 
-    if(message.channel.id=='698142346931601421' && message.author.id!=jajBotId){
-        //message.channel.send(logMsg);
-    }
-
-    //temp
+    //message logging
     console.log(args);
     console.log("l1: " + args[0],"l2: " + args[1]);
     
@@ -96,16 +93,27 @@ client.on('message', async message=>{
             });
     }
 
-    if(message.content.substring(0,9)=='jaj svise'){
+    //pfp command
+    if(message.content.substring(0,3) == 'pfp'){
+        var user = message.mentions.users.first();
+        console.log(user.avatarURL() + '?size=1024')
+        message.channel.send(user.avatarURL() + '?size=1024')
+        if(user.id == '693966110328094730'){
+            message.reply('nai eimai gamatos to kserw')
+        }
+    }
+
+    //svisimo command
+    if(message.content.substring(0,9) == 'jaj svise'){
         if(message.author.id == adminRoleId || message.author.id == stefastraId){
-            if (args[11]>=0 && args[11]<=9){
-                delMsgNum = parseInt(args[11]) * 10;
+            if (Number(args[11]) != NaN){
+                delMsgNum = Number(args[11]) * 10;
                 console.log('jaj will delete ', delMsgNum, ' messages in', message.channel.name);
             }
             delMsgNum = 20;
             console.log('o jaj esvise ', delMsgNum, ' minimata sto ', message.channel.name);
             message.channel.bulkDelete(delMsgNum);
-            message.reply('geia jaj edw, esvisa ' + toString(delMsgNum) + ' minimata :^)')
+            message.reply('geia jaj edw, esvisa ', toString(delMsgNum), ' minimata :^)')
             .then(msg =>{
                 msg.delete({timeout:5000});
             })
@@ -115,12 +123,24 @@ client.on('message', async message=>{
         }
     }
 
-    if(args[0]=='jaj' && args[1]=='steile' && message.channel.id=='696857160318976021'){
+    //katharise command
+    if(message.content.substring(0,13) == 'jaj katharise'){
+        if(message.author.id == adminRoleId || message.author.id == stefastraId){
+            //todo lmao
+        }
+    }
+
+    //jaj steile command
+    if(message.content == 'jaj steile' && message.channel.id=='772129659194310727'){
+        if(message.author.id == adminRoleId)
+        message.reply('entaksei afentiko :^)')
+        while(true){
             console.log('Sending pic...');
             message.channel.send(prntUrlBase + prntUrlVarNum.toString(36));
             prntUrlVarNum++;
             await sleep(3000);
             console.log('Sent!');
+        }
     }
 
     //generic responses below
