@@ -40,7 +40,7 @@ var delMsgNum = 1;
 
 client.on('message', async message=>{
     const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
-    console.log("msgId: " + "\"" + message.id + "\"" + " authorId: " + "\"" + message.author.id + "\"")
+    console.log("channel: " + "\"" + message.channel.name + "\"" + " author: " + "\"" + message.author.username + "\"")
     if(message.channel.id === dmChannelId){
         chGeneral.send(message.content);
     }
@@ -126,7 +126,16 @@ client.on('message', async message=>{
     //katharise command
     if(message.content.substring(0,13) == 'jaj katharise'){
         if(message.author.id == adminRoleId || message.author.id == stefastraId){
-            //todo lmao
+            // const channel = message.channel;
+            // const channel = client.channels.get('someID');
+
+            message.channel.fetchMessages(50)
+            .then(fetchedMessages => {
+            const messagesToDelete = fetchedMessages.filter(msg => (msg.content.includes('-p')));
+             return channel.bulkDelete(messagesToDelete, true);
+        })
+        .then(deletedMessages => channel.send(`Deleted **${deletedMessages.size}** message${deletedMessages.size !== 1 ? 's' : ''}.`))
+        .catch(console.error);
         }
     }
 
