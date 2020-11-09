@@ -40,12 +40,17 @@ var delMsgNum = 1;
 
 client.on('message', async message=>{
     const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
-    console.log("channel: " + "\"" + message.channel.name + "\"" + " author: " + "\"" + message.author.username + "\"")
     if(message.channel.id === dmChannelId){
         chGeneral.send(message.content);
     }
     let args = message.content.toLowerCase();
-    var logMsg = '';
+    //logging
+    console.log("channel: " + "\"" + message.channel.name + "\"" + " author: " + "\"" + message.author.username + "\"");
+    if(message.content != '')
+        console.log(message.content);
+    else
+        console.log('an image was sent'); //todo make it show the image url
+    console.log("l1: " + args[0],"l2: " + args[1]);
 
     /*
         var i=0;
@@ -54,12 +59,7 @@ client.on('message', async message=>{
             logMsg+=element+'\n';
             i++;
         });
-    */
-
-    //message logging
-    console.log(args);
-    console.log("l1: " + args[0],"l2: " + args[1]);
-    
+    */   
 
     //all channel moderation |1: bot-commands, 2: music, music exception is needed to avoid duplicate chat moderation rules
     if(((args[0]=='-' && args[1]=='f') || (args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r')) && message.channel!='487383328161267714' && message.channel!='487381111744233473'){
