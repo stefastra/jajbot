@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+const { exception } = require('console');
 const client = new Discord.Client();
 const token = JSON.parse(fs.readFileSync('token.json'))
 const prntUrlBase = 'http://prntscr.com/';
@@ -45,7 +46,7 @@ client.on('message', async message=>{
     }
     let args = message.content.toLowerCase();
     //logging
-    console.log("channel: " + "\"" + message.channel.name + "\"" + " author: " + "\"" + message.author.username + "\"");
+    console.log("channel: " + "\"" + message.channel.name + "\"" + " author: " + "\"" + message.author.username + "\" " + Date(message.createdTimestamp));
     if(message.content != '')
         console.log(message.content);
     else
@@ -95,9 +96,15 @@ client.on('message', async message=>{
 
     //pfp command
     if(message.content.substring(0,3) == 'pfp'){
-        var user = message.mentions.users.first();
-        console.log(user.avatarURL() + '?size=1024')
-        message.channel.send(user.avatarURL() + '?size=1024')
+        try{
+            var user = message.mentions.users.first();
+            console.log(user.avatarURL() + '?size=1024');
+            message.channel.send(user.avatarURL() + '?size=1024');
+        }
+        catch(err){
+            console.log("Unexpected Behaviour!");
+            message.channel.send("nai asteio malaka?");
+        }
         if(user.id == '693966110328094730'){
             message.reply('nai eimai gamatos to kserw')
         }
@@ -185,12 +192,12 @@ client.on('message', async message=>{
                 message.channel.send('haha bruh: https://github.com/stefastra/jajbot');
             break;
             case 'mpes':
-                if(message.author.presence){
+                if(false){
                     message.channel.send('pou re mlk');
                     message.channel.send('<:peepoNpc:536307730361745418>');
                 }
                 else{
-                        const vc = message.guild.channels.cache.get('340526243743137813');
+                        const vc = message.guild.channels.cache.get('692402791011975249');
                         vc.join();
                 }
             break;
