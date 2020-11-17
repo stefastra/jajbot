@@ -25,6 +25,8 @@ client.on('ready', ()=>{
     if(doStartupMessage)
         chGeneral.send('jupnisa, kalimera xalarwse!');
     var Kavlet = client.guilds.cache.find(gl => gl.name === 'Kavlet');
+    chGeneral.send('<:gangweed:778366494315773953>');
+    chGeneral.send('slonk the gang weed');
 });
 
 client.on('guildMemberUpdate', member=>{
@@ -108,6 +110,7 @@ client.on('message', async message=>{
         if(user.id == '693966110328094730'){
             message.reply('nai eimai gamatos to kserw')
         }
+        
     }
 
     //svisimo command
@@ -208,7 +211,7 @@ client.on('message', async message=>{
                 message.channel.send(':point_left: :point_right:');
             break;
             case 'ti trws?':
-                message.channel.send('🍊🥪');
+                message.channel.send('https://cdn.discordapp.com/attachments/762014861956743171/778367100196618270/0buu83n7npw11.jpg');
             break;
         };
     })
