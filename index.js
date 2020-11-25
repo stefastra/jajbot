@@ -10,6 +10,7 @@ var jajBotId = '693966110328094730';
 var musicBotId = '234395307759108106';
 var stefastraId = '181014405578883073';
 var dmChannelId = '696483345760125058';
+var botCommandsChannelId = '487383328161267714';
 var adminRoleId = '727647679026561117';
 var doStartupMessage = false;
 
@@ -23,10 +24,8 @@ client.on('ready', ()=>{
     console.log('jaj is online, id: ' + client.user.tag + '. token is valid.');
     const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
     if(doStartupMessage)
-        chGeneral.send('jupnisa, kalimera xalarwse!');
+        chGeneral.send('<:pepega:625376360306835471>');
     var Kavlet = client.guilds.cache.find(gl => gl.name === 'Kavlet');
-    chGeneral.send('<:gangweed:778366494315773953>');
-    chGeneral.send('slonk the gang weed');
 });
 
 client.on('guildMemberUpdate', member=>{
@@ -63,9 +62,14 @@ client.on('message', async message=>{
             i++;
         });
     */   
+   //bot deletion
+    if(message.author.id==musicBotId && message.channel.id!=botCommandsChannelId){
+        message.delete();
+    }
+
 
     //all channel moderation |1: bot-commands, 2: music, music exception is needed to avoid duplicate chat moderation rules
-    if(((args[0]=='-' && args[1]=='f') || (args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r')) && message.channel!='487383328161267714' && message.channel!='487381111744233473'){
+    if(((args[0]=='-' && args[1]=='f' && args[2]=='f') || (args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r')) && message.channel!='487383328161267714' && message.channel!='487381111744233473'){
         //must fix -ff not working
         message.delete();
         if(flag){
