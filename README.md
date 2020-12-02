@@ -10,4 +10,5 @@ just another discord bot
 - Clearing of other bot's messages
 - Will spam random pictures from prnt.sc into a channel upon request
 - Show users profile pictures with the pfp command
+- /christmashat... nuff said
 - More to follow
