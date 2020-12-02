@@ -102,7 +102,11 @@ for (var i = 0; i < images.length; i++){
 await Promise.all(jimps).then(function(data) {
     return Promise.all(jimps)
 }).then(async function(data){
-    data[0].composite(data[1], 0, 0);
+    var w = images[0].bitmap.width;
+    var h = images[0].bitmap.height;
+    images[0]
+    data[0].composite(data[1], 100, 0);
+    data[0].fisheye({ r: 2.2});
     data[0].write(jajpath + imgPath + user.id + "_hat" + ".png");
 })           
         message.channel.send("", {files: [jajpath + imgPath + user.id + "_hat" + ".png"]});
@@ -134,7 +138,7 @@ await Promise.all(jimps).then(function(data) {
     }
     
     //music channel moderation
-    if(message.content.substring(0,32)!='https://www.youtube.com/watch?v=' && message.content.substring(0,17)!='https://youtu.be/' && message.channel=='487381111744233473' && message.author.id!=jajBotId){
+    if(message.content.substring(0,32)!='https://www.youtube.com/watch?v=' && message.content.substring(0,17)!='https://youtu.be/' && message.content.substring(0,33)!='https://www.youtube.com/playlist?' && message.channel=='487381111744233473' && message.author.id!=jajBotId){
         console.log('non-youtube link spotted in music channel');
         message.delete();
         if(message.author.id!='234395307759108106')
