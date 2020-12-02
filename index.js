@@ -1,11 +1,13 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { exception } = require('console');
+const jimp = require('jimp');
+const webp=require('webp-converter');
+const download = require('image-downloader')
 const client = new Discord.Client();
 const token = JSON.parse(fs.readFileSync('token.json'))
 const prntUrlBase = 'http://prntscr.com/';
+const jajpath = __dirname;
 var prntUrlVarNum = parseInt(JSON.parse(fs.readFileSync('runtime.json')));
-var msgFlag = true;
 var jajBotId = '693966110328094730';
 var musicBotId = '234395307759108106';
 var stefastraId = '181014405578883073';
@@ -24,8 +26,7 @@ client.on('ready', ()=>{
     console.log('jaj is online, id: ' + client.user.tag + '. token is valid.');
     const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
     if(doStartupMessage)
-        chGeneral.send('<:pepega:625376360306835471>');
-    var Kavlet = client.guilds.cache.find(gl => gl.name === 'Kavlet');
+        chGeneral.send('<:mamalis:778589167868968960>');
 });
 
 client.on('guildMemberUpdate', member=>{
@@ -37,7 +38,6 @@ client.on('guildMemberUpdate', member=>{
 
 var flag = true; 
 var flagK = false;
-var isSending = false;
 var delMsgNum = 1;
 
 client.on('message', async message=>{
@@ -62,12 +62,56 @@ client.on('message', async message=>{
             i++;
         });
     */   
-   //bot deletion
+   //groovy message deletion
     if(message.author.id==musicBotId && message.channel.id!=botCommandsChannelId){
         message.delete();
     }
 
+    //christmas hat
+    if(message.content.substring(0,13) == "/christmashat"){
+        var user = message.content.author;
+        var imgPath = "\\assets\\hats_cache\\";
+        try{
+            user = message.mentions.users.first();
+            console.log(`using the picture of ${user.id}`);
+        }
+        catch(err){}
 
+        const options = {
+            url: user.avatarURL() + "?size=1024",
+            dest: jajpath + imgPath + user.id + ".webp"
+          }
+            download.image(options)
+            .then(({ filename }) => {
+            console.log('Saved to', filename)
+            result.then((response) => {
+                console.log(response);
+              });
+        })
+        .catch((err) => console.error(err))
+
+        const result = webp.dwebp(jajpath + imgPath + user.id +".webp", jajpath + imgPath + user.id + ".png", "-o");
+
+
+var images = [jajpath + imgPath + user + ".png", jajpath + "\\assets\\hat.png"];
+var jimps = [];
+for (var i = 0; i < images.length; i++){
+    jimps.push(jimp.read(images[i]))
+}
+//creates a promise to handle the jimps
+await Promise.all(jimps).then(function(data) {
+    return Promise.all(jimps)
+}).then(async function(data){
+    data[0].composite(data[1], 0, 0);
+    data[0].write(jajpath + imgPath + user.id + "_hat" + ".png");
+})           
+        message.channel.send("", {files: [jajpath + imgPath + user.id + "_hat" + ".png"]});
+    }
+
+    //roll command
+    if(message.content == "roll"){
+        message.channel.send(Math.floor(Math.random() * 10)); //todo
+    }
     //all channel moderation |1: bot-commands, 2: music, music exception is needed to avoid duplicate chat moderation rules
     if(((args[0]=='-' && args[1]=='f' && args[2]=='f') || (args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r')) && message.channel!='487383328161267714' && message.channel!='487381111744233473'){
         //must fix -ff not working
