@@ -83,33 +83,37 @@ client.on('message', async message=>{
           }
             download.image(options)
             .then(({ filename }) => {
-            console.log('Saved to', filename)
+            console.log('Profile pic downloaded as ', filename)
+            const result = webp.dwebp(jajpath + imgPath + user.id +".webp", jajpath + imgPath + user.id + ".png", "-o"); //convert webp to png
             result.then((response) => {
                 console.log(response);
               });
         })
         .catch((err) => console.error(err))
 
-        const result = webp.dwebp(jajpath + imgPath + user.id +".webp", jajpath + imgPath + user.id + ".png", "-o");
+        var hatSent = false;
+        while(!hatSent){
+            var images = [jajpath + imgPath + user + ".png", jajpath + "\\assets\\hat.png"];
+            var jimps = [];
+            for (var i = 0; i < images.length; i++){
+                jimps.push(jimp.read(images[i]))
+            }
 
-
-var images = [jajpath + imgPath + user + ".png", jajpath + "\\assets\\hat.png"];
-var jimps = [];
-for (var i = 0; i < images.length; i++){
-    jimps.push(jimp.read(images[i]))
-}
-//creates a promise to handle the jimps
-await Promise.all(jimps).then(function(data) {
-    return Promise.all(jimps)
-}).then(async function(data){
-    var w = images[0].bitmap.width;
-    var h = images[0].bitmap.height;
-    images[0]
-    data[0].composite(data[1], 100, 0);
-    data[0].fisheye({ r: 2.2});
-    data[0].write(jajpath + imgPath + user.id + "_hat" + ".png");
-})           
-        message.channel.send("", {files: [jajpath + imgPath + user.id + "_hat" + ".png"]});
+            //creates a promise to handle the jimps
+            await Promise.all(jimps).then(function(data) {
+                return Promise.all(jimps)
+            }).then(async function(data){
+                data[0].composite(data[1], 0, 0);
+                data[0].fisheye({ r: 2.2});
+                data[0].write(jajpath + imgPath + user.id + "_hat" + ".png");
+            })
+            try{
+                message.channel.send("", {files: [jajpath + imgPath + user.id + "_hat" + ".png"]});
+                hatSent = true;
+            }catch(err){
+                console.log("error when sending hat pic");
+            }
+        }        
     }
 
     //roll command
