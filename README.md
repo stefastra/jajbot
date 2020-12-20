@@ -12,3 +12,9 @@ just another discord bot
 - Show users profile pictures with the pfp command
 - /christmashat... nuff said
 - More to follow
+
+## Installation
+
+using npm:
+
+npm install package.json
