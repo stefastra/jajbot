@@ -16,6 +16,15 @@ var botCommandsChannelId = '487383328161267714';
 var adminRoleId = '727647679026561117';
 var doStartupMessage = false;
 
+
+//todo split in files
+
+//todo add jaj commands command
+
+//todo fix command parsing and handling / make it smarter
+
+
+
 client.login(token);
 
 function sleep(ms) {
@@ -24,9 +33,10 @@ function sleep(ms) {
 
 client.on('ready', ()=>{
     console.log('jaj is online, id: ' + client.user.tag + '. token is valid.');
+    client.user.setStatus('invisible');
     const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
     if(doStartupMessage)
-        chGeneral.send('<:mamalis:778589167868968960>');
+        chGeneral.send('<:mamalis:778589167868968960>');    
 });
 
 client.on('guildMemberUpdate', member=>{
@@ -142,6 +152,8 @@ client.on('message', async message=>{
     }
     
     //music channel moderation
+
+    //TODO ADD SPOTIFY/BANDCAMP/SOUNDCLOUD/TIDAL LINKS
     if(message.content.substring(0,32)!='https://www.youtube.com/watch?v=' && message.content.substring(0,17)!='https://youtu.be/' && message.content.substring(0,33)!='https://www.youtube.com/playlist?' && message.channel=='487381111744233473' && message.author.id!=jajBotId){
         console.log('non-youtube link spotted in music channel');
         message.delete();
@@ -215,6 +227,29 @@ client.on('message', async message=>{
             prntUrlVarNum++;
             await sleep(3000);
             console.log('Sent!');
+        }
+    }
+
+    //cat
+    if(message.author.id == "181092858273595392"){
+        const cats = "/cat|cats|kitty|kitten|puss|pussy|meow/i";
+        var n = message.content.search(cats);
+        var currChannel = message.channel.id;
+        if(n != -1){
+            message.reply(":black_cat:");
+            message.delete();
+
+            var trollfaces = [
+            "https://tenor.com/view/troll-trollface-ragememe-rageface-trolling-gif-4929853",
+            "https://tenor.com/view/troll-stick-figure-dancing-gif-5259835",
+            "https://tenor.com/view/troll-lel-dance-funny-meme-gif-12438731",
+            "https://tenor.com/view/troll-face-slap-smile-gif-15260095",
+            "https://tenor.com/view/troll-trolled-trollface-smile-umad-gif-9568504",
+            "https://tenor.com/view/rhino-pooping-enormous-gros-gif-gif-17044608",
+            "https://tenor.com/view/uncle-dane-dope-meme-walking-troll-face-gif-17449904"
+            ];
+
+            client.users.cache.get("181014405578883073").send(trollfaces[Math.floor(Math.random() * trollfaces.length)]);
         }
     }
 
