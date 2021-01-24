@@ -1,5 +1,3 @@
-public/app/token.json
-git rm --cached public/app/token.json
-
 .vscode/
 node_modules/
+token.json
