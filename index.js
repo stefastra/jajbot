@@ -12,10 +12,16 @@ var jajBotId = '693966110328094730';
 var musicBotId = '234395307759108106';
 var stefastraId = '181014405578883073';
 var dmChannelId = '696483345760125058';
+var enio4eDmChannelId = '803293894803456000';
 var botCommandsChannelId = '487383328161267714';
 var adminRoleId = '727647679026561117';
-var mayo = true;
 var isSending = false;
+
+var mayo = true;
+var rollEnabled = true;
+var rollPrcEnabled = true;
+var fortuneEnabled = true;
+var rndMentionEnabled = false;
 
 
 client.login(token);
@@ -57,6 +63,7 @@ client.on('message', async message=>{
     let args = message.content.toLowerCase();
     //logging
     console.log("channel: " + "\"" + message.channel.name + "\"" + " author: " + "\"" + message.author.username + "\" " + Date(message.createdTimestamp));
+    console.log(message.channel.id);
     if(message.content != ""){
         console.log(message.content);
     }else{
@@ -70,7 +77,7 @@ client.on('message', async message=>{
     console.log("l1: " + args[0],"l2: " + args[1]);
 
     //mayo
-    if(message.content == 'https://tenor.com/view/manowar-courage-true-metal-mano-warrior-strong-gif-16851884' && mayo == true){
+    if(message.content == 'https://tenor.com/view/manowar-courage-true-metal-mano-warrior-strong-gif-16851884' && message.author.id != jajBotId && mayo == true){
         message.channel.send('https://tenor.com/view/manowar-courage-true-metal-mano-warrior-strong-gif-16851884');
     }
 
@@ -88,13 +95,14 @@ client.on('message', async message=>{
             { name: 'jaj svise', value: 'svinei ta teleftaia 10 minimata' },
             { name: 'jaj help', value: 'auto pou diavazeis authn thn stigmi' },
             { name: 'jaj ?', value: 'apantaei se erwthseis typou nai h oxi'},
+            { name: 'jaj @', value: 'mention kapoion stin tuxh (disabled logo spam)'},
             { name: 'jaj roll', value: 'rollarei 0-10' },
             { name: 'jaj roll%', value: 'rollarei 0-100%' },
             { name: 'pfp @mention', value: 'deixnei thn eikona tou tagarismenou xristi sto discord', },
             { name: '/christmashat @', value: 'vazei xristougenniatiko kapelo sthn eikona tou tagarismenou xristi', },
         )
         .setTimestamp()
-        .setFooter('© stefastra 2020', 'https://raw.githubusercontent.com/stefastra/jajbot/master/assets/mandarine.png');
+        .setFooter('© stefastra 2021', 'https://raw.githubusercontent.com/stefastra/jajbot/master/assets/mandarine.png');
 
         message.channel.send(cmds);
     } 
@@ -149,17 +157,17 @@ client.on('message', async message=>{
     }
 
     //roll command
-    if(message.content.search(/jaj roll/i) != -1 && message.content.search(/jaj roll\%/i) == -1){
+    if(message.content.search(/jaj roll/i) != -1 && message.content.search(/jaj roll\%/i) == -1 && rollEnabled == true){
         message.channel.send("rolling 0-10: " + Math.floor(Math.random() * 10)); //needs improvement
     }
 
     //roll% command
-    if(message.content.search(/jaj roll\%/i) != -1){
+    if(message.content.search(/jaj roll\%/i) != -1 && rollPrcEnabled == true){
         message.channel.send("rolling 0-100%: " + Math.floor(Math.random() * 100) +"%"); //needs improvement
     }
 
     //fortune command
-    if(message.content.search(/jaj \?/i) != -1){
+    if(message.content.search(/jaj \?/i) != -1 && fortuneEnabled == true){
         var fortune = [
             "sigoura", "einai sigouro", "... nai", "nai", "mporeis na «vasisteis» se auto",
             "etsi pws to vlepw, nai", "arketa pithano", "ksekathara", "profanws", "ta simadia lene nai",
@@ -170,11 +178,13 @@ client.on('message', async message=>{
     }
 
     //random tag command
-    if(message.content.search(/jaj @/i) != -1){
+    if(message.content.search(/jaj @/i) != -1 && rndMentionEnabled == true){
             var userlist = [
                 "181132923485945862","181134145198489600","700690140795895888","181133772983500800","181014405578883073",
                 "267244513070809089","225195171204038656","273893282361114625","396653783804936202","693966110328094730",
-                "641557334526787594","181092858273595392","239132499819626497","451747321622036480","181101011245596672"
+                "641557334526787594","181092858273595392","239132499819626497","451747321622036480","181101011245596672",
+                "395530692584407050", "354236714853728256", "236504980939341826", "185335103499665408", "185335103499665408",
+                "367020830187716610", "187538910367318017"
                 ];
             message.channel.send("<@" + userlist[Math.floor(Math.random() * userlist.length)] + ">");
     }
@@ -331,16 +341,19 @@ client.on('message', async message=>{
         }
     }
 
-    //enio4e detection
-    /*if(message.author.id=='451747321622036480'){
-        if(message.content.search("4"!= -1)){
-            var msgstr = message.content
-            while(msgstr.search("4")!= -1){
-                msgstr = msgstr.replace("4","t")
-            }
-            message.channel.send("metafrasi: " + msgstr)
+    //enio4e
+    if(message.author.id == '451747321622036480'){
+        if(message.content.search(/jaj s4eile 4/i) != -1){
+            message.reply("T t Τ τ   :^)");
         }
-    }*/
+    }
+    if(message.author.id == '451747321622036480'){
+        if(message.content.search(/ξαξ σ4ειλε 4/i) != -1){
+            message.reply("T t Τ τ   :^)");
+        }
+        //todo : https://tenor.com/view/jerma-jeremy-short-midget-boomer-gif-15554620
+    }
+
 
 
     //generic responses below
