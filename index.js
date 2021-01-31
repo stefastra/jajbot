@@ -21,7 +21,7 @@ var mayo = true;
 var rollEnabled = true;
 var rollPrcEnabled = true;
 var fortuneEnabled = true;
-var rndMentionEnabled = false;
+var rndMentionEnabled = true;
 
 
 client.login(token);
@@ -223,8 +223,9 @@ client.on('message', async message=>{
     
     //music channel moderation
     if(message.content.substring(0,32)!='https://www.youtube.com/watch?v=' && message.content.substring(0,17)!='https://youtu.be/' &&
-    message.content.substring(0,33)!='https://www.youtube.com/playlist?' && message.content.substring(0,25)!='https://open.spotify.com/' &&
-    message.content.search(/bandcamp.com\//)== -1 && message.content.substring(0,31)!='https://tidal.com/browse/track/' &&
+    message.content.substring(0,33)!='https://www.youtube.com/playlist?' && message.content.substring(0,30)!='https://m.youtube.com/watch?v=' &&
+    message.content.substring(0,25)!='https://open.spotify.com/' && message.content.search(/bandcamp.com\//)== -1 &&
+    message.content.substring(0,31)!='https://tidal.com/browse/track/' &&
     message.channel=='487381111744233473' && message.author.id!=jajBotId){
         console.log('non-music link spotted in music channel');
         message.delete();
@@ -342,18 +343,22 @@ client.on('message', async message=>{
     }
 
     //enio4e
-    if(message.author.id == '451747321622036480'){
-        if(message.content.search(/jaj s4eile 4/i) != -1){
+
+    if(message.content.search(/jaj s4eile 4/i) != -1){
+        if(message.author.id == '451747321622036480'){
             message.reply("T t Τ τ   :^)");
+        }else{
+            message.channel.send("https://tenor.com/view/jerma-jeremy-short-midget-boomer-gif-15554620");
         }
-    }
-    if(message.author.id == '451747321622036480'){
-        if(message.content.search(/ξαξ σ4ειλε 4/i) != -1){
-            message.reply("T t Τ τ   :^)");
-        }
-        //todo : https://tenor.com/view/jerma-jeremy-short-midget-boomer-gif-15554620
     }
 
+    if(message.content.search(/ξαξ σ4ειλε 4/i) != -1){
+        if(message.author.id == '451747321622036480'){
+            message.reply("T t Τ τ   :^)");
+        }else{
+            message.channel.send("https://tenor.com/view/jerma-jeremy-short-midget-boomer-gif-15554620");
+        }
+    }
 
 
     //generic responses below
