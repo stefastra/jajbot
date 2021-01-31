@@ -190,7 +190,8 @@ client.on('message', async message=>{
     }
 
     //all channel moderation |1: bot-commands, 2: music, music exception is needed to avoid duplicate chat moderation rules
-    if(((args[0]=='-' && args[1]=='f' && args[2]=='f') || (args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]=='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r'))
+    if(((args[0]=='-' && args[1]=='f' && args[2]=='f') || (args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]=='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r') ||
+        (args[0]=='-' && args[1]=='F' && args[2]=='F') || (args[0]=='-' && args[1]=='P') || (args[0]=='-' && args[1]=='S') || (args[0]=='-' && args[1]=='Q') || (args[0]=='-' && args[1]=='R'))
     && message.channel!='487383328161267714' && message.channel!='796105151810240564'){
         //must fix -ff not working
         message.react("🍊");
