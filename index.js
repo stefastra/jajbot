@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const jimp = require('jimp');
 const webp=require('webp-converter');
 const download = require('image-downloader');
+const { title } = require('process');
 const client = new Discord.Client();
 const token = JSON.parse(fs.readFileSync('token.json'));
 const prntUrlBase = 'http://prntscr.com/';
@@ -34,15 +35,15 @@ function sleep(ms) {
 client.on('ready', ()=>{
     console.log('jaj is online, id: ' + client.user.tag + '. token is valid.');
     const chGeneral = client.channels.cache.find(ch => ch.name === '⌨general');
-    //chGeneral.send('<:mamalis:778589167868968960>');    
+    //chGeneral.send('<:mamalis:778589167868968960>');
     //client.user.setStatus('invisible');
     
 });
 
 client.on('guildMemberUpdate', member=>{
-    if(member.id=='181134145198489600'){
+    if(member.id=='225195171204038656'){
         const chGeneral = member.guild.channels.cache.find(ch => ch.name === '⌨general');
-        chGeneral.send('placeholder'); //this feature has not been implemented yet
+        message.member.setNickname("smeke");
     }
 })
 
@@ -79,6 +80,12 @@ client.on('message', async message=>{
     //mayo
     if(message.content == 'https://tenor.com/view/manowar-courage-true-metal-mano-warrior-strong-gif-16851884' && message.author.id != jajBotId && mayo == true){
         message.channel.send('https://tenor.com/view/manowar-courage-true-metal-mano-warrior-strong-gif-16851884');
+        mayo = false;
+    }
+
+    //crypto
+    if(message.content.search(/doge/i) != -1 && message.author.id != jajBotId){
+        //lol
     }
 
     //commands command
@@ -193,7 +200,6 @@ client.on('message', async message=>{
     if(((args[0]=='-' && args[1]=='f' && args[2]=='f') || (args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]=='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r') ||
         (args[0]=='-' && args[1]=='F' && args[2]=='F') || (args[0]=='-' && args[1]=='P') || (args[0]=='-' && args[1]=='S') || (args[0]=='-' && args[1]=='Q') || (args[0]=='-' && args[1]=='R'))
     && message.channel!='487383328161267714' && message.channel!='796105151810240564'){
-        //must fix -ff not working
         message.react("🍊");
         await sleep(3000);
         message.delete();
@@ -401,6 +407,7 @@ client.on('message', async message=>{
             case 'vges':
                 const vc = message.guild.channels.cache.get('692402791011975249');
                 vc.leave();
+            break;
             case 'ti trws?':
                 message.channel.send('https://cdn.discordapp.com/attachments/762014861956743171/778367100196618270/0buu83n7npw11.jpg');
             break;
