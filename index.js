@@ -42,7 +42,6 @@ client.on('ready', ()=>{
 
 client.on('guildMemberUpdate', member=>{
     if(member.id=='225195171204038656'){
-        const chGeneral = member.guild.channels.cache.find(ch => ch.name === '⌨general');
         message.member.setNickname("smeke");
     }
 })
@@ -76,6 +75,14 @@ client.on('message', async message=>{
         });
     }
     console.log("l1: " + args[0],"l2: " + args[1]);
+
+    //smeke
+    if(message.author.id == "225195171204038656"){
+        var smikelist = [
+            "smike","smik","sminem","scum","smeks","smixalis","shushi","spaghetti","schmeke","smeke","smikey smouse"
+            ];
+        message.member.setNickname(smikelist[Math.floor(Math.random() * smikelist.length)]);
+    }
 
     //mayo
     if(message.content == 'https://tenor.com/view/manowar-courage-true-metal-mano-warrior-strong-gif-16851884' && message.author.id != jajBotId && mayo == true){
