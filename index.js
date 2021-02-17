@@ -40,12 +40,6 @@ client.on('ready', ()=>{
     
 });
 
-client.on('guildMemberUpdate', member=>{
-    if(member.id=='225195171204038656'){
-        message.member.setNickname("smeke");
-    }
-})
-
 /*client.on('emojiDelete', emoji=>{
         const chGeneral = client.guilds.cache. .find(ch => ch.name === '⌨general');
         chGeneral.send(emoji,' was deleted.');
@@ -79,9 +73,11 @@ client.on('message', async message=>{
     //smeke
     if(message.author.id == "225195171204038656"){
         var smikelist = [
-            "smike","smik","sminem","scum","smeks","smixalis","shushi","spaghetti","schmeke","smeke","smikey smouse"
+            "smike","smik","sminem","σμινεμ","smeks","smixalis","σμικε","σμποϊνγκ","schmeke","smeke","smikey smouse","smixalakis","speepee spoopoo"
             ];
         message.member.setNickname(smikelist[Math.floor(Math.random() * smikelist.length)]);
+        await sleep(3000);
+        message.member.setNickname("smxke");
     }
 
     //mayo
