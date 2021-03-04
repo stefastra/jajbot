@@ -71,14 +71,15 @@ client.on('message', async message=>{
     console.log("l1: " + args[0],"l2: " + args[1]);
 
     //smeke
-    if(message.author.id == "225195171204038656"){
+    /*if(message.author.id == "225195171204038656"){
         var smikelist = [
             "smike","smik","sminem","σμινεμ","smeks","smixalis","σμικε","σμποϊνγκ","schmeke","smeke","smikey smouse","smixalakis","speepee spoopoo"
             ];
         message.member.setNickname(smikelist[Math.floor(Math.random() * smikelist.length)]);
         await sleep(3000);
         message.member.setNickname("smxke");
-    }
+    }*/
+    //note: this is not funny
 
     //mayo
     if(message.content == 'https://tenor.com/view/manowar-courage-true-metal-mano-warrior-strong-gif-16851884' && message.author.id != jajBotId && mayo == true){
@@ -105,7 +106,7 @@ client.on('message', async message=>{
             { name: 'jaj svise', value: 'svinei ta teleftaia 10 minimata' },
             { name: 'jaj help', value: 'auto pou diavazeis authn thn stigmi' },
             { name: 'jaj ?', value: 'apantaei se erwthseis typou nai h oxi'},
-            { name: 'jaj @', value: 'mention kapoion stin tuxh (disabled logo spam)'},
+            { name: 'jaj @', value: 'mention kapoion stin tuxh'},
             { name: 'jaj roll', value: 'rollarei 0-10' },
             { name: 'jaj roll%', value: 'rollarei 0-100%' },
             { name: 'pfp @mention', value: 'deixnei thn eikona tou tagarismenou xristi sto discord', },
@@ -200,8 +201,8 @@ client.on('message', async message=>{
     }
 
     //all channel moderation |1: bot-commands, 2: music, music exception is needed to avoid duplicate chat moderation rules
-    if(((args[0]=='-' && args[1]=='f' && args[2]=='f') || (args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]=='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r') ||
-        (args[0]=='-' && args[1]=='F' && args[2]=='F') || (args[0]=='-' && args[1]=='P') || (args[0]=='-' && args[1]=='S') || (args[0]=='-' && args[1]=='Q') || (args[0]=='-' && args[1]=='R'))
+    if(((args[0]=='-' && args[1]=='f' && args[2]=='f') || (args[0]=='-' && args[1]=='p') || (args[0]=='-' && args[1]=='s') || (args[0]=='-' && args[1]=='q') || (args[0]=='-' && args[1]=='r') || (args[0]=='-' && args[1]=='n' && args[2]=='p') ||
+        (args[0]=='-' && args[1]=='F' && args[2]=='F') || (args[0]=='-' && args[1]=='P') || (args[0]=='-' && args[1]=='S') || (args[0]=='-' && args[1]=='Q') || (args[0]=='-' && args[1]=='R')) || (args[0]=='-' && args[1]=='N' && args[2]=='P')
     && message.channel!='487383328161267714' && message.channel!='796105151810240564'){
         message.react("🍊");
         await sleep(3000);
@@ -364,7 +365,7 @@ client.on('message', async message=>{
 
     if(message.content.search(/ξαξ σ4ειλε 4/i) != -1){
         if(message.author.id == '451747321622036480'){
-            message.reply("T t Τ τ   :^)");
+            message.reply("T t Τ τ 5 - _  :^)");
         }else{
             message.channel.send("https://tenor.com/view/jerma-jeremy-short-midget-boomer-gif-15554620");
         }
