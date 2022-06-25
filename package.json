@@ -18,7 +18,7 @@
     "http": "0.0.1-security",
     "image-downloader": "^4.0.1",
     "jimp": "^0.16.1",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "opusscript": "0.0.7",
     "package.json": "^2.0.1",
     "puppeteer": "^7.0.1",
